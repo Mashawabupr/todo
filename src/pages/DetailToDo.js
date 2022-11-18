@@ -1,6 +1,6 @@
-import { useParams, Route, Switch, Link } from "react-router-dom";
+import { useParams, Route, Switch} from "react-router-dom";
 import useHttp from "../hooks/use-http";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import NoTasksFound from "../components/todos/NoTasksFound";
 import LoadingSpinner from "../components/UI/LoadingSpinner";

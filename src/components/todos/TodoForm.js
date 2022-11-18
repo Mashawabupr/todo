@@ -58,7 +58,6 @@ const TodoForm = (props) => {
     });
   };
   useEffect(() => {
-    console.log(valueFile);
     if (
       valueAuthor.trim().length > 0 &&
       valueText.trim().length > 0 &&
