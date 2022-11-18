@@ -11,7 +11,7 @@ const TodoForm = (props) => {
   let [valueAuthor, setAuthor] = useState("");
   let [valueText, setText] = useState("");
   let [valueDate, setDate] = useState("");
-  let [valueFile, setFile] = useState("");
+  let [valueFile, setFile] = useState(true);
   let [fileList, setList] = useState([]);
   let listRef = ref(storage, "");
 
@@ -42,11 +42,12 @@ const TodoForm = (props) => {
     setDate(event.target.value);
   };
   let handleFile = (event) => {
-    setFile(event.target.files[0]);
-    let fileRef = ref(storage, `${Math.random}`);
+    setFile(false);
+    let fileRef = ref(storage, `${Math.random()}`);
     uploadBytes(fileRef, event.target.files[0]);
   };
   let handleFileSubmit = (event) => {
+    setFile(true);
     event.preventDefault();
     listAll(listRef).then((response) => {
       response.items.forEach((item) => {
@@ -57,6 +58,7 @@ const TodoForm = (props) => {
     });
   };
   useEffect(() => {
+    console.log(valueFile);
     if (
       valueAuthor.trim().length > 0 &&
       valueText.trim().length > 0 &&
@@ -110,14 +112,14 @@ const TodoForm = (props) => {
 
         <div>
           <input type="file" id="file" onChange={handleFile} />
-          <button onClick={handleFileSubmit}>Submit</button>
+          <button onClick={handleFileSubmit}>Add a file</button>
         </div>
 
         <div className={classes.actions}>
           <button
-            className={isValid ? "btn" : "btn invalid"}
+            className={isValid && valueFile ? "btn" : "btn invalid"}
             onClick={handleClick}
-            disabled={!isValid}
+            disabled={!isValid && !valueFile}
           >
             Add ToDo
           </button>
