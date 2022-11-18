@@ -3,19 +3,38 @@ import { Prompt } from "react-router-dom";
 import Card from "../UI/Card";
 import LoadingSpinner from "../UI/LoadingSpinner";
 import classes from "./TodoForm.module.css";
-
+import { storage } from "../../firebase";
+import { ref, listAll, getDownloadURL, uploadBytes } from "firebase/storage";
 const TodoForm = (props) => {
   let [entered, setEntered] = useState(false);
   let [isValid, setValid] = useState(false);
   let [valueAuthor, setAuthor] = useState("");
   let [valueText, setText] = useState("");
   let [valueDate, setDate] = useState("");
+  let [valueFile, setFile] = useState("");
+  let [fileList, setList] = useState([]);
+  let listRef = ref(storage, "");
+
   function submitFormHandler(event) {
     event.preventDefault();
 
-    props.onAddQuote({ author: valueAuthor, text: valueText, date: valueDate });
+    props.onAddQuote({
+      author: valueAuthor,
+      text: valueText,
+      date: valueDate,
+      file: fileList,
+    });
   }
-
+  useEffect(() => {
+    listAll(listRef).then((response) => {
+      response.items.forEach((item) => {
+        getDownloadURL(item).then((url) => {
+          setList(url);
+          console.log(url);
+        });
+      });
+    });
+  }, [valueFile]);
   let handleClick = () => {
     setEntered(false);
   };
@@ -30,6 +49,11 @@ const TodoForm = (props) => {
   };
   let handleDate = (event) => {
     setDate(event.target.value);
+  };
+  let handleFile = (event) => {
+    setFile(event.target.files[0]);
+    let fileRef = ref(storage, `${valueAuthor}/`);
+    uploadBytes(fileRef, event.target.files[0]);
   };
   useEffect(() => {
     if (
@@ -63,6 +87,7 @@ const TodoForm = (props) => {
             onChange={handleAuthor}
           />
         </div>
+
         <div className={classes.control}>
           <label htmlFor="date">Date</label>
           <input
@@ -81,6 +106,8 @@ const TodoForm = (props) => {
             onChange={handleText}
           ></textarea>
         </div>
+
+        <input type="file" id="file" onChange={handleFile} />
 
         <div className={classes.actions}>
           <button

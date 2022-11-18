@@ -1,8 +1,8 @@
 import classes from "./TodoItem.module.css";
 import { Link } from "react-router-dom";
-
+import { useState, useEffect } from "react";
 const TodoItem = (props) => {
-  console.log(props);
+  let [inputCheck, setCheck] = useState(false);
   let handleDelete = () => {
     fetch(
       `https://todo-69230-default-rtdb.firebaseio.com/todos/${props.id}.json`,
@@ -13,20 +13,40 @@ const TodoItem = (props) => {
       props.onFetch(Math.random());
     });
   };
-
-  let classDate =
-    new Date() > new Date(props.date)
-      ? `${classes.item} ${classes.expired}`
-      : `${classes.item}`;
-  console.log(classDate);
+  useEffect(() => {
+    setCheck(inputCheck);
+  }, [inputCheck]);
+  let hanleCheckBox = () => {
+    setCheck(!inputCheck);
+  };
+  let date = new Date() > new Date(props.date);
+  let classDateExpired = date
+    ? `${classes.item} ${classes.expired}`
+    : `${classes.item}`;
+  let taskIsDone = inputCheck
+    ? `${classes.item} ${classes.taskDone}`
+    : `${classes.item}`;
   return (
-    <li className={classDate}>
+    <li className={`${classDateExpired} ${taskIsDone}`}>
+      {!date && (
+        <input
+          type="checkbox"
+          className={classes.checkBox}
+          onClick={hanleCheckBox}
+          value={inputCheck}
+        />
+      )}
       <figure>
+        <figcaption>{props.author}</figcaption>
         <blockquote>
           <p>{props.text}</p>
         </blockquote>
-        <figcaption>{props.author}</figcaption>
-        <p>{props.date}</p>
+        <p>
+          {date && <span>expired-</span>}
+         
+          {props.date}
+        </p>
+        <div>{props.file}</div>
       </figure>
       <Link className="btn" to={`/AllToDos/${props.id}`}>
         View

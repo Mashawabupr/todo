@@ -1,6 +1,6 @@
 .quote {
-  background-color: #162b2b;
-  color: white;
+  background-color: #c2e7f0;
+  color: rgb(255, 156, 25);
   border-radius: 6px;
   padding: 3rem;
   margin: 3rem auto;
@@ -16,5 +16,9 @@
   font-style: italic;
   font-size: 1.5rem;
   text-align: right;
-  color: #a1e0e0;
+  color: rgb(255, 156, 25);
+}
+.title {
+  text-align: center;
+  margin: 0;
 }

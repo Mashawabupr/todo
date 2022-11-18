@@ -15,6 +15,7 @@ const TodoList = (props) => {
             author={quote.author}
             text={quote.text}
             onFetch={props.onFetch}
+            file={props.file}
           />
         ))}
       </ul>
