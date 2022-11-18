@@ -13,27 +13,27 @@ const TodoItem = (props) => {
       props.onFetch(Math.random());
     });
   };
-  useEffect(() => {
-    setCheck(inputCheck);
-  }, [inputCheck]);
-  let hanleCheckBox = () => {
-    setCheck(!inputCheck);
+
+  let handleCheckBox = (event) => {
+    setCheck(event.target.checked);
+    localStorage.setItem(props.id, event.target.checked);
   };
   let date = new Date() > new Date(props.date);
   let classDateExpired = date
     ? `${classes.item} ${classes.expired}`
     : `${classes.item}`;
-  let taskIsDone = inputCheck
+  let taskIsDone = localStorage.getItem(props.id)
     ? `${classes.item} ${classes.taskDone}`
     : `${classes.item}`;
+
   return (
     <li className={`${classDateExpired} ${taskIsDone}`}>
-      {!date && (
+      {!date && !localStorage.getItem(props.id) && (
         <input
           type="checkbox"
           className={classes.checkBox}
-          onClick={hanleCheckBox}
-          value={inputCheck}
+          onChange={handleCheckBox}
+          id={props.id}
         />
       )}
       <figure>
@@ -43,16 +43,17 @@ const TodoItem = (props) => {
         </blockquote>
         <p>
           {date && <span>expired-</span>}
-         
+
           {props.date}
         </p>
-        <div>{props.file}</div>
       </figure>
-      <Link className="btn" to={`/AllToDos/${props.id}`}>
-        View
-      </Link>
-      <div className="btn" onClick={handleDelete}>
-        Delete
+      <div className={classes.buttons}>
+        <Link className="btn" to={`/AllToDos/${props.id}`}>
+          View
+        </Link>
+        <div className="btn" onClick={handleDelete}>
+          Delete
+        </div>
       </div>
     </li>
   );

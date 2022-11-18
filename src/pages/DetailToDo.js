@@ -21,7 +21,7 @@ let DetailQuotes = () => {
       </div>
     );
   }
-  console.log(data.file);
+
   if (error) {
     return <p className="centered focused">{error}</p>;
   }
@@ -35,9 +35,18 @@ let DetailQuotes = () => {
         <Switch>
           <Route path={`/AllToDos/${data.id}/`} exact>
             <div className="centered">
-              <a href={data.file} className="btn" target="_blank">
-                File
-              </a>
+              {data.file ? (
+                <a
+                  href={data.file}
+                  className="btn"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  File
+                </a>
+              ) : (
+                <p>File was not added</p>
+              )}
             </div>
           </Route>
 

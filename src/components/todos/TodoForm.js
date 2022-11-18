@@ -25,16 +25,7 @@ const TodoForm = (props) => {
       file: fileList,
     });
   }
-  useEffect(() => {
-    listAll(listRef).then((response) => {
-      response.items.forEach((item) => {
-        getDownloadURL(item).then((url) => {
-          setList(url);
-          console.log(url);
-        });
-      });
-    });
-  }, [valueFile]);
+
   let handleClick = () => {
     setEntered(false);
   };
@@ -52,8 +43,18 @@ const TodoForm = (props) => {
   };
   let handleFile = (event) => {
     setFile(event.target.files[0]);
-    let fileRef = ref(storage, `${valueAuthor}/`);
+    let fileRef = ref(storage, `${Math.random}`);
     uploadBytes(fileRef, event.target.files[0]);
+  };
+  let handleFileSubmit = (event) => {
+    event.preventDefault();
+    listAll(listRef).then((response) => {
+      response.items.forEach((item) => {
+        getDownloadURL(item).then((url) => {
+          setList(url);
+        });
+      });
+    });
   };
   useEffect(() => {
     if (
@@ -107,7 +108,10 @@ const TodoForm = (props) => {
           ></textarea>
         </div>
 
-        <input type="file" id="file" onChange={handleFile} />
+        <div>
+          <input type="file" id="file" onChange={handleFile} />
+          <button onClick={handleFileSubmit}>Submit</button>
+        </div>
 
         <div className={classes.actions}>
           <button

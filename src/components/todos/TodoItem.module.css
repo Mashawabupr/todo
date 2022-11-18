@@ -3,6 +3,7 @@
   padding: 1rem;
   display: flex;
   justify-content: space-between;
+
   align-items: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   border-radius: 6px;
@@ -23,7 +24,7 @@
   margin: 0;
   text-align: left;
   font-size: 1.5rem;
-  color: #212929;
+  color: black;
 }
 
 .item p {
@@ -33,7 +34,7 @@
 
 .item figcaption {
   font-style: italic;
-  color: #566d6d;
+  color: black;
 }
 .expired {
   background-color: rgb(243, 182, 112);
@@ -43,4 +44,13 @@
 }
 .taskDone {
   background-color: rgb(147, 212, 147);
+}
+.buttons {
+  display: flex;
+}
+@media (width < 500px) {
+  .item {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }

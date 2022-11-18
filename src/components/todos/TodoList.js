@@ -3,7 +3,6 @@ import TodoItem from "./TodoItem";
 import classes from "./TodoList.module.css";
 
 const TodoList = (props) => {
-  console.log(props.quotes);
   return (
     <Fragment>
       <ul className={classes.list}>
