@@ -33,6 +33,7 @@ const TodoItem = (props) => {
           id={props.id}
         />
       )}
+
       <figure>
         <figcaption>{props.author}</figcaption>
         <blockquote>

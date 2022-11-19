@@ -1,4 +1,4 @@
-import { useParams, Route, Switch} from "react-router-dom";
+import { useParams, Route, Switch } from "react-router-dom";
 import useHttp from "../hooks/use-http";
 import { useEffect } from "react";
 
@@ -29,6 +29,7 @@ let DetailQuotes = () => {
   if ((status === "completed" && !data) || data.length === 0) {
     return <NoTasksFound />;
   } else {
+    
     return (
       <div>
         <HighlightedTodo quote={data} />
