@@ -1,6 +1,8 @@
 import classes from "./TodoItem.module.css";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 const TodoItem = (props) => {
+  let [done, setDone] = useState(false);
   let handleDelete = () => {
     fetch(
       `https://todo-69230-default-rtdb.firebaseio.com/todos/${props.id}.json`,
@@ -13,6 +15,7 @@ const TodoItem = (props) => {
   };
 
   let handleCheckBox = (event) => {
+    setDone(true);
     localStorage.setItem(props.id, event.target.checked);
   };
   let date = new Date() > new Date(props.date);
@@ -33,7 +36,6 @@ const TodoItem = (props) => {
           id={props.id}
         />
       )}
-
       <figure>
         <figcaption>{props.author}</figcaption>
         <blockquote>
